@@ -11,19 +11,14 @@ import lombok.Setter;
 public class Letter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long letter_id;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    private String sender;
+    private String receiver;
+    private String s_r_relation;
+    private String letter_name;
+    private String letter_content;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private User receiver;
 
-    private String letterType;
-    private String letterContent;
-    private String letterStatus;
 
-    // Getters and setters
 }

@@ -5,14 +5,14 @@ import lombok.Setter;
 
 public class LetterDTO {
     @Getter @Setter
-    private Long senderId;
+    private String sender;
     @Getter @Setter
-    private Long receiverId;
+    private String receiver;
     @Getter @Setter
-    private String letterType;
+    private String s_r_relation;
     @Getter @Setter
-    private String letterContent;
+    private String letter_name;
     @Getter @Setter
-    private String letterStatus;
+    private String letter_content;
 
 }
