@@ -3,6 +3,9 @@ package org.africalib.test.test.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.africalib.test.test.dto.LetterDTO;
+
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -13,12 +16,34 @@ public class Letter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long letter_id;
 
-    private String sender;
-    private String receiver;
-    private String s_r_relation;
-    private String letter_name;
-    private String letter_content;
+    @Column
+    private String sender_name;
+    @Column
+    private String receiver_name;
+    @Column
+    private String relationship_with_user;
+    @Column
+    private Timestamp writing_date;
+    @Column
+    private String situation;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "letter_id")
+    private LetterContent letterContent;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "letter_id")
+    private LetterStyle letterStyle;
+
+    public static Letter toLetterEntity(LetterDTO letterDTO) {
+        Letter letter = new Letter();
+        letter.setLetter_id(letterDTO.getLetter_id());
+        letter.setSender_name(letterDTO.getSender_name());
+        letter.setReceiver_name(letterDTO.getReceiver_name());
+        letter.setRelationship_with_user(letterDTO.getRelationship_with_user());
+        letter.setWriting_date(letterDTO.getWriting_date());
+        letter.setSituation(letterDTO.getSituation());
+        return letter;
+    }
 
 }

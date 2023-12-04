@@ -1,15 +1,14 @@
 package org.africalib.test.test.letter;
 
+import org.africalib.test.test.dto.LetterCombinedDTO;
 import org.africalib.test.test.dto.LetterDTO;
-import org.africalib.test.test.dto.UserDTO;
 import org.africalib.test.test.entity.Letter;
+import org.africalib.test.test.entity.LetterCombined;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/letters")
+@RequestMapping("/letter")
 public class LetterController {
     private final LetterService letterService;
 
@@ -18,23 +17,34 @@ public class LetterController {
         this.letterService = letterService;
     }
 
+    // 작성한 편지 저장
+    @PostMapping("/write")
+    public LetterCombined saveLetter(@RequestBody LetterCombinedDTO letterCombinedDTO) {
+        return letterService.saveLetter(letterCombinedDTO);
+    }
+
+    // json으로 받기위한 객체
+    private class User {
+        private String userId;
+        public String getUserId() {
+            return userId;
+        }
+    }
     @GetMapping
-    public List<Letter> getAllLetters() {
-        return letterService.getAllLetters();
+    public String getLetterList(@RequestBody Long user) {
+        // user id로 편지 검색
+        return "편지목록";
+    }
+    // 편지 읽기
+    @GetMapping("/view")
+    public LetterCombined getLetter(@PathVariable Long letterId) {
+        return letterService.getLetter(letterId);
     }
 
-//    @GetMapping("/{id}")
-//    public Letter getLetterById(@PathVariable Long id) {
-//        return letterService.getLetterById(id);
-//    }
-
-    @PostMapping
-    public String saveLetter(@RequestBody LetterDTO letterDTO) {
-        return letterService.saveLetter(letterDTO);
+    // 편지 삭제
+    @DeleteMapping("/view")
+    public Boolean delLetter(@PathVariable Integer letterId) {
+        // return letterService.deleteLetter(letterId);
+        return false;
     }
-
-//    @DeleteMapping("/{id}")
-//    public void deleteLetter(@PathVariable Long id) {
-//        letterService.deleteLetter(id);
-//    }
 }
