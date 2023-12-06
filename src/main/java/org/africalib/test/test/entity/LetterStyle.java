@@ -23,8 +23,6 @@ public class LetterStyle {
     @Column
     private Float font_size;
 
-    @OneToOne(mappedBy = "letterStyle", cascade = CascadeType.ALL)
-    private Letter letter;
 
     public static LetterStyle toLetterStyleEntity(LetterStyleDTO letterStyleDTO) {
         LetterStyle letterStyle = new LetterStyle();

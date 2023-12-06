@@ -1,5 +1,6 @@
 package org.africalib.test.test.letter;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.africalib.test.test.dto.LetterCombinedDTO;
 import org.africalib.test.test.dto.LetterStyleDTO;
 import org.africalib.test.test.entity.LetterCombined;
@@ -55,6 +56,10 @@ public class LetterService {
             LetterContent letterContent = letterContentRepository.findById(letterId).orElse(null);
             LetterStyle letterStyle = letterStyleRepository.findById(letterId).orElse(null);
 
+            if (letter == null || letterContent == null || letterStyle == null) {
+                throw new EntityNotFoundException("One or more entities not found for ID: " + letterId);
+            }
+
             LetterCombined letterCombined = new LetterCombined();
             letterCombined.setLetter_info(letter);
             letterCombined.setLetter_content(letterContent);
@@ -69,10 +74,12 @@ public class LetterService {
 
     public boolean deleteLetter(Long letterId) {
         try {
+            // 해당 ID의 편지를 삭제합니다.
+            letterStyleRepository.deleteById(letterId);
+            letterContentRepository.deleteById(letterId);
             letterRepository.deleteById(letterId);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }

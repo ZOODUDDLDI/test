@@ -14,6 +14,4 @@ public class LetterContent {
     @Column
     private String letter_content;
 
-    @OneToOne(mappedBy = "letterContent", cascade = CascadeType.ALL)
-    private Letter letter;
 }

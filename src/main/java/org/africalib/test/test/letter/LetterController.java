@@ -5,6 +5,8 @@ import org.africalib.test.test.dto.LetterDTO;
 import org.africalib.test.test.entity.Letter;
 import org.africalib.test.test.entity.LetterCombined;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,20 +33,20 @@ public class LetterController {
         }
     }
     @GetMapping
-    public String getLetterList(@RequestBody Long user) {
+    public String getLetterList(@RequestParam Long user) {
         // user id로 편지 검색
         return "편지목록";
     }
     // 편지 읽기
-    @GetMapping("/view")
+    @GetMapping("/view/{letterId}")
     public LetterCombined getLetter(@PathVariable Long letterId) {
+
         return letterService.getLetter(letterId);
     }
 
     // 편지 삭제
-    @DeleteMapping("/view")
-    public Boolean delLetter(@PathVariable Integer letterId) {
-        // return letterService.deleteLetter(letterId);
-        return false;
+    @DeleteMapping("/view/{letterId}")
+    public Boolean delLetter(@PathVariable Long letterId) {
+        return letterService.deleteLetter(letterId);
     }
 }

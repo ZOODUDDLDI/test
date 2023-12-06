@@ -27,14 +27,6 @@ public class Letter {
     @Column
     private String situation;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "letter_id")
-    private LetterContent letterContent;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "letter_id")
-    private LetterStyle letterStyle;
-
     public static Letter toLetterEntity(LetterDTO letterDTO) {
         Letter letter = new Letter();
         letter.setLetter_id(letterDTO.getLetter_id());
